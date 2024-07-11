@@ -1,6 +1,6 @@
-import { Pane, majorScale } from 'evergreen-ui'
-import NavBar from 'views/Login/Auth/NavBar'
-import TechStack from 'views/Login/TechStack'
+import { Pane, majorScale } from "evergreen-ui";
+import NavBar from "views/Login/Auth/NavBar";
+import TechStack from "views/Login/TechStack";
 
 export default () => (
   <Pane width="100%" height="100%" maxHeight={majorScale(200)}>
@@ -17,4 +17,4 @@ export default () => (
       <TechStack />
     </Pane>
   </Pane>
-)
+);

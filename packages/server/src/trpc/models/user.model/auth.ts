@@ -1,102 +1,102 @@
-import prisma from 'sdks/prisma'
-import bcrypt from 'bcryptjs'
-import { TRPCError } from '@trpc/server'
-import { generateJwtToken } from 'lib/auth'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
-import { User } from '@prisma/client'
+import prisma from "sdks/prisma";
+import bcrypt from "bcryptjs";
+import { TRPCError } from "@trpc/server";
+import { generateJwtToken } from "lib/auth";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { User } from "@prisma/client";
 
 const signIn = async ({
   email,
-  password
+  password,
 }: {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }) => {
   const authError = new TRPCError({
-    code: 'UNAUTHORIZED',
-    message: 'Invalid username or password'
-  })
+    code: "UNAUTHORIZED",
+    message: "Invalid username or password",
+  });
   const user = await prisma.user.findUniqueOrThrow({
     where: { email },
-    include: { password: true }
-  })
-  if (!user || !user.password) throw authError
+    include: { password: true },
+  });
+  if (!user || !user.password) throw authError;
 
-  const isValid = await bcrypt.compare(password, user.password.hash)
-  if (!isValid) throw authError
+  const isValid = await bcrypt.compare(password, user.password.hash);
+  if (!isValid) throw authError;
 
-  const accessToken = generateJwtToken(user)
+  const accessToken = generateJwtToken(user);
 
   return {
     id: user.id,
     email: user.email,
     name: user.name,
-    accessToken
-  }
-}
+    accessToken,
+  };
+};
 
 const signUp = async ({
   email,
-  password
+  password,
 }: {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }) => {
-  const hash = await bcrypt.hash(password, 10)
-  let user: User | null = null
+  const hash = await bcrypt.hash(password, 10);
+  let user: User | null = null;
   try {
     user = await prisma.user.create({
       data: {
         email,
-        password: { create: { hash } }
-      }
-    })
+        password: { create: { hash } },
+      },
+    });
   } catch (error) {
     if (
       error instanceof PrismaClientKnownRequestError &&
-      error.code === 'P2002' &&
+      error.code === "P2002" &&
       Array.isArray(error.meta?.target) &&
-      error.meta?.target?.includes('email')
+      error.meta?.target?.includes("email")
     ) {
       throw new TRPCError({
-        code: 'CONFLICT',
-        message: 'Email already in use'
-      })
+        code: "CONFLICT",
+        message: "Email already in use",
+      });
     }
     throw new TRPCError({
-      code: 'INTERNAL_SERVER_ERROR',
-      message: 'Something went wrong'
-    })
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Something went wrong",
+    });
   }
-  const accessToken = generateJwtToken(user)
+  const accessToken = generateJwtToken(user);
   return {
     id: user.id,
     email: user.email,
     name: user.name,
-    accessToken
-  }
-}
+    accessToken,
+  };
+};
 
 const updatePassword = async ({
   email,
-  password
+  password,
 }: {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }) => {
-  const hash = await bcrypt.hash(password, 10)
+  const hash = await bcrypt.hash(password, 10);
   return prisma.user.update({
     where: {
-      email
+      email,
     },
     data: {
       password: {
         update: {
-          hash
-        }
-      }
-    }
-  })
-}
+          hash,
+        },
+      },
+    },
+  });
+};
 
-export default { signIn, signUp, updatePassword }
+export default { signIn, signUp, updatePassword };

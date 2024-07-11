@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { trpc } from 'lib/trpc'
+import { useState } from "react";
+import { trpc } from "lib/trpc";
 import {
   Button,
   majorScale,
@@ -8,42 +8,42 @@ import {
   Heading,
   toaster,
   Popover,
-  Position
-} from 'evergreen-ui'
+  Position,
+} from "evergreen-ui";
 
 type SignUpButtonProps = {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-}
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+};
 
 export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const utils = trpc.useUtils()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const utils = trpc.useUtils();
 
   const signUp = trpc.auth.signUp.useMutation({
     onSuccess: async () => {
-      await utils.auth.getUser.invalidate()
-      toaster.success('Sign-up successful!')
+      await utils.auth.getUser.invalidate();
+      toaster.success("Sign-up successful!");
     },
     onError: (error) => {
-      console.error(error)
-      if (error.data?.code === 'CONFLICT') {
-        toaster.danger(error.message)
+      console.error(error);
+      if (error.data?.code === "CONFLICT") {
+        toaster.danger(error.message);
       } else {
-        toaster.danger('Sign-up failed, please try again.')
+        toaster.danger("Sign-up failed, please try again.");
       }
-    }
-  })
+    },
+  });
 
   const handleSignUp = async () => {
     if (password !== confirmPassword) {
-      return toaster.danger('Passwords do not match.')
+      return toaster.danger("Passwords do not match.");
     }
-    await signUp.mutateAsync({ email, password })
-    setIsOpen(false)
-  }
+    await signUp.mutateAsync({ email, password });
+    setIsOpen(false);
+  };
   return (
     <Popover
       isShown={isOpen}
@@ -93,8 +93,8 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
               setConfirmPassword(e.target.value)
             }
             onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => {
-              if (e.key === 'Enter') {
-                await handleSignUp()
+              if (e.key === "Enter") {
+                await handleSignUp();
               }
             }}
           />
@@ -111,13 +111,13 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
       }
     >
       <Button
-        appearance={isOpen ? 'minimal' : 'primary'}
-        intent={isOpen ? 'none' : 'success'}
+        appearance={isOpen ? "minimal" : "primary"}
+        intent={isOpen ? "none" : "success"}
         cursor="pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         Sign Up
       </Button>
     </Popover>
-  )
+  );
 }

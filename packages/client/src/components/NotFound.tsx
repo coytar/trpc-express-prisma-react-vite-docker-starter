@@ -1,4 +1,4 @@
-import { Pane, Heading } from 'evergreen-ui'
+import { Pane, Heading } from "evergreen-ui";
 
 export default () => (
   <Pane>
@@ -6,4 +6,4 @@ export default () => (
       Not Found
     </Heading>
   </Pane>
-)
+);

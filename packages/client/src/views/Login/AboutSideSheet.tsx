@@ -12,33 +12,33 @@ import {
   ListItem,
   Elevation,
   Text,
-  Li
-} from 'evergreen-ui'
+  Li,
+} from "evergreen-ui";
 
-import linkedIn from 'views/Login/assets/linkedin-logo.png'
-import github from 'views/Login/assets/gh-logo.png'
+import linkedIn from "views/Login/assets/linkedin-logo.png";
+import github from "views/Login/assets/gh-logo.png";
 
 export type Props = {
-  isShown: boolean
-  setIsShown: (arg: boolean) => void
-}
+  isShown: boolean;
+  setIsShown: (arg: boolean) => void;
+};
 
 const cardProps = {
-  backgroundColor: 'white',
+  backgroundColor: "white",
   elevation: 0 as Elevation,
-  display: 'flex',
-  justifyContent: 'center',
-  padding: majorScale(2)
-}
+  display: "flex",
+  justifyContent: "center",
+  padding: majorScale(2),
+};
 
 export default ({ isShown, setIsShown }: Props) => (
   <SideSheet
     isShown={isShown}
     onCloseComplete={() => setIsShown(false)}
     containerProps={{
-      display: 'flex',
-      flex: '1',
-      flexDirection: 'column'
+      display: "flex",
+      flex: "1",
+      flexDirection: "column",
     }}
     width={majorScale(60)}
   >
@@ -172,4 +172,4 @@ export default ({ isShown, setIsShown }: Props) => (
       </Card>
     </Pane>
   </SideSheet>
-)
+);

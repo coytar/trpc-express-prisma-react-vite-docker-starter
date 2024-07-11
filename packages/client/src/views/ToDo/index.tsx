@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react";
 import {
   Heading,
   Spinner,
@@ -6,31 +6,31 @@ import {
   majorScale,
   toaster,
   TextInput,
-  minorScale
-} from 'evergreen-ui'
-import { trpc } from 'lib/trpc'
-import Center from 'components/CenterPage'
-import ToDoItem from 'views/ToDo/ToDoItem'
+  minorScale,
+} from "evergreen-ui";
+import { trpc } from "lib/trpc";
+import Center from "components/CenterPage";
+import ToDoItem from "views/ToDo/ToDoItem";
 
 export default () => {
-  const [newTodo, setNewTodo] = useState('')
-  const utils = trpc.useUtils()
-  const invalidateTodos = utils.todo.list.invalidate
+  const [newTodo, setNewTodo] = useState("");
+  const utils = trpc.useUtils();
+  const invalidateTodos = utils.todo.list.invalidate;
 
-  const { data: todos, isError, isLoading } = trpc.todo.list.useQuery()
+  const { data: todos, isError, isLoading } = trpc.todo.list.useQuery();
   const create = trpc.todo.create.useMutation({
-    onSuccess: async () => await invalidateTodos()
-  })
+    onSuccess: async () => await invalidateTodos(),
+  });
 
-  const addItem = (title: string) => create.mutateAsync({ title })
+  const addItem = (title: string) => create.mutateAsync({ title });
 
   if (isError) {
-    toaster.danger('Error fetching todo list. Please try again.')
+    toaster.danger("Error fetching todo list. Please try again.");
     return (
       <Center>
         <Heading>Something went wrong.</Heading>
       </Center>
-    )
+    );
   }
 
   if (isLoading) {
@@ -38,7 +38,7 @@ export default () => {
       <Center>
         <Spinner />
       </Center>
-    )
+    );
   }
 
   return (
@@ -58,8 +58,8 @@ export default () => {
           Todo
         </Heading>
         {todos.map((todo) => {
-          if (todo.isCompleted) return null
-          return <ToDoItem key={todo.id} todo={todo} />
+          if (todo.isCompleted) return null;
+          return <ToDoItem key={todo.id} todo={todo} />;
         })}
         <Pane display="flex" width={majorScale(50)} justifyContent="center">
           <TextInput
@@ -72,12 +72,12 @@ export default () => {
               setNewTodo(e.currentTarget.value)
             }
             onKeyDown={async (e: {
-              key: string
-              currentTarget: { value: string }
+              key: string;
+              currentTarget: { value: string };
             }) => {
-              if (e.key === 'Enter') {
-                await addItem(newTodo)
-                setNewTodo('')
+              if (e.key === "Enter") {
+                await addItem(newTodo);
+                setNewTodo("");
               }
             }}
           />
@@ -102,11 +102,11 @@ export default () => {
             Completed
           </Heading>
           {todos.map((todo) => {
-            if (!todo.isCompleted) return null
-            return <ToDoItem key={todo.id} todo={todo} strikeThrough />
+            if (!todo.isCompleted) return null;
+            return <ToDoItem key={todo.id} todo={todo} strikeThrough />;
           })}
         </>
       )}
     </Center>
-  )
-}
+  );
+};

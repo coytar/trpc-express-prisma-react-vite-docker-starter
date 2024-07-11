@@ -4,26 +4,26 @@ import {
   Heading,
   majorScale,
   Image,
-  minorScale
-} from 'evergreen-ui'
+  minorScale,
+} from "evergreen-ui";
 
-import viteLogo from 'assets/Vitejs-logo.svg'
-import evergreenLogo from 'assets/evergreen-logo.png'
-import trpcLogo from 'assets/trpc-logo.svg'
-import prismaLogo from 'assets/prisma-logo.png'
-import dockerLogo from 'assets/docker-logo.webp'
+import viteLogo from "assets/Vitejs-logo.svg";
+import evergreenLogo from "assets/evergreen-logo.png";
+import trpcLogo from "assets/trpc-logo.svg";
+import prismaLogo from "assets/prisma-logo.png";
+import dockerLogo from "assets/docker-logo.webp";
 
 const logos: { src: string; name: string; site: string }[] = [
   {
     src: evergreenLogo,
-    name: 'Evergreen-UI',
-    site: 'https://evergreen.segment.com/'
+    name: "Evergreen-UI",
+    site: "https://evergreen.segment.com/",
   },
-  { src: viteLogo, name: 'Vite + React', site: 'https://vitejs.dev/' },
-  { src: trpcLogo, name: 'tRPC', site: 'https://trpc.io/' },
-  { src: prismaLogo, name: 'Prisma', site: 'https://www.prisma.io/' },
-  { src: dockerLogo, name: 'Docker', site: 'https://www.docker.com/' }
-]
+  { src: viteLogo, name: "Vite + React", site: "https://vitejs.dev/" },
+  { src: trpcLogo, name: "tRPC", site: "https://trpc.io/" },
+  { src: prismaLogo, name: "Prisma", site: "https://www.prisma.io/" },
+  { src: dockerLogo, name: "Docker", site: "https://www.docker.com/" },
+];
 
 export default () => (
   <Pane
@@ -43,7 +43,7 @@ export default () => (
         paddingY={minorScale(3)}
         hoverElevation={1}
         cursor="pointer"
-        onClick={() => window.open(site, '_blank')}
+        onClick={() => window.open(site, "_blank")}
       >
         <Image src={src} height={majorScale(8)} width={majorScale(8)} />
         <Heading
@@ -58,4 +58,4 @@ export default () => (
       </Card>
     ))}
   </Pane>
-)
+);

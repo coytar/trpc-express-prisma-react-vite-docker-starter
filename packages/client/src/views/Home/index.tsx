@@ -1,5 +1,5 @@
-import { Pane, Heading } from 'evergreen-ui'
-import Center from 'components/CenterPage'
+import { Pane, Heading } from "evergreen-ui";
+import Center from "components/CenterPage";
 
 export default () => (
   <Center>
@@ -12,4 +12,4 @@ export default () => (
       Home
     </Heading>
   </Center>
-)
+);

@@ -1,8 +1,8 @@
-import React from 'react'
-import { Pane, PaneProps } from 'evergreen-ui'
+import React from "react";
+import { Pane, PaneProps } from "evergreen-ui";
 
 interface CenterProps extends PaneProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Center: React.FC<CenterProps> = ({ children, ...rest }) => {
@@ -18,7 +18,7 @@ const Center: React.FC<CenterProps> = ({ children, ...rest }) => {
     >
       {children}
     </Pane>
-  )
-}
+  );
+};
 
-export default Center
+export default Center;

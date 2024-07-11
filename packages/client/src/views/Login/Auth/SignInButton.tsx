@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { trpc } from 'lib/trpc'
+import { useState } from "react";
+import { trpc } from "lib/trpc";
 import {
   Button,
   majorScale,
@@ -8,34 +8,34 @@ import {
   Heading,
   toaster,
   Popover,
-  Position
-} from 'evergreen-ui'
+  Position,
+} from "evergreen-ui";
 
 type SignInButtonProps = {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-}
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+};
 
 export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const utils = trpc.useUtils()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const utils = trpc.useUtils();
 
   const signIn = trpc.auth.signIn.useMutation({
     onSuccess: async () => {
-      await utils.auth.getUser.invalidate()
-      toaster.success('Sign-in successful!', { duration: 2 })
+      await utils.auth.getUser.invalidate();
+      toaster.success("Sign-in successful!", { duration: 2 });
     },
     onError: (error) => {
-      console.error(error)
-      toaster.danger('Sign-in failed, please try again.')
-    }
-  })
+      console.error(error);
+      toaster.danger("Sign-in failed, please try again.");
+    },
+  });
 
   const handleSignIn = async () => {
-    await signIn.mutateAsync({ email, password })
-    setIsOpen(false)
-  }
+    await signIn.mutateAsync({ email, password });
+    setIsOpen(false);
+  };
 
   return (
     <Popover
@@ -77,8 +77,8 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
               setPassword(e.target.value)
             }
             onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => {
-              if (e.key === 'Enter') {
-                await handleSignIn()
+              if (e.key === "Enter") {
+                await handleSignIn();
               }
             }}
           />
@@ -98,5 +98,5 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
         Sign In
       </Button>
     </Popover>
-  )
+  );
 }

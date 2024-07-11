@@ -19,10 +19,10 @@
     "baseUrl": "./src",
     "paths": {
       "server/*": ["../../server/*"],
-      "server": ["../../server"],
+      "server": ["../../server"]
     }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"],
-  "references": [{ "path": "./tsconfig.node.json" }, { "path": "../server"}]
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "../server" }]
 }
